@@ -14,7 +14,7 @@ const StudentPortal = () => {
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!studentId.trim()) {
-      setError('Please enter your Student ID');
+      setError('Please enter your Matric Number');
       return;
     }
 
@@ -31,10 +31,10 @@ const StudentPortal = () => {
         setResults(allResults);
         setShowModal(true);
       } else {
-        setError('No results found for this Student ID. Please check your ID and try again.');
+        setError('No results found for this Matric Number. Please check your Matric Number and try again.');
       }
     } catch (error) {
-      setError('No results found for this Student ID. Please check your ID and try again.');
+      setError('No results found for this Matric Number. Please check your Matric Number and try again.');
       console.error('Search error:', error);
     } finally {
       setIsSearching(false);
@@ -74,18 +74,17 @@ const StudentPortal = () => {
                 type="text"
                 value={studentId}
                 onChange={(e) => setStudentId(e.target.value)}
-                placeholder="Search anything on Student Results"
+                placeholder="Input Matric Number"
                 className="w-full px-6 py-4 text-lg bg-gray-800 border border-gray-700 rounded-xl focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 shadow-lg"
                 disabled={isSearching}
               />
-              <button type="submit" disabled={isSearching} className="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-600 hover:bg-blue-700 rounded-full p-2 shadow-md">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" /></svg>
+              <button type="submit" disabled={isSearching} className="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-600 hover:bg-blue-700 rounded-full p-2 shadow-md flex items-center justify-center min-w-[48px] min-h-[48px]">
+                {isSearching ? (
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" /></svg>
+                )}
               </button>
-              {isSearching && (
-                <div className="absolute right-12 top-1/2 transform -translate-y-1/2">
-                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
-                </div>
-              )}
             </form>
             {error && (
               <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
@@ -139,49 +138,6 @@ const StudentPortal = () => {
       {/* Footer */}
       <footer className="border-t border-gray-800 bg-gray-900 mt-16 shadow-inner">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center">
-                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                  </svg>
-                </div>
-                <span className="font-semibold text-blue-400 tracking-wide">{config.app.name}</span>
-              </div>
-              <p className="text-gray-400 text-sm">
-                A feature-rich student result explorer and analytics platform for academic institutions
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4 text-white tracking-wide">Explorer</h3>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-blue-400">Search Results</a></li>
-                <li><a href="#" className="hover:text-blue-400">Student Directory</a></li>
-                <li><a href="#" className="hover:text-blue-400">Academic Reports</a></li>
-                <li><a href="#" className="hover:text-blue-400">Transcripts</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4 text-white tracking-wide">Developers</h3>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-blue-400">API Documentation</a></li>
-                <li><a href="#" className="hover:text-blue-400">Integration Guide</a></li>
-                <li><a href="#" className="hover:text-blue-400">SUI Blockchain</a></li>
-                <li><a href="#" className="hover:text-blue-400">Support</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4 text-white tracking-wide">Company</h3>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-blue-400">About Us</a></li>
-                <li><a href="#" className="hover:text-blue-400">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-blue-400">Terms of Service</a></li>
-                <li><a href="#" className="hover:text-blue-400">Contact</a></li>
-              </ul>
-            </div>
-          </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-500">
             <p>Powered by SUI Blockchain Technology</p>
             <p className="mt-1">© 2025 {config.app.name}. All rights reserved.</p>

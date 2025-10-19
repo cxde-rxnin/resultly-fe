@@ -13,6 +13,7 @@ export interface ResultData {
 export interface Result extends ResultData {
   timestamp?: string;
   updatedAt?: string;
+  txHash?: string;
 }
 
 export const addResult = async (data: ResultData) => {
@@ -33,6 +34,13 @@ export const updateResult = async (studentId: string, courseCode: string, semest
     courseCode,
     semester,
     newGrade
+  });
+  return res.data;
+};
+
+export const getTxHashes = async (studentId: string) => {
+  const res = await axios.get(`${API_URL}/txhashes`, {
+    params: { studentId }
   });
   return res.data;
 };

@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import type { Result } from '../../api/blockchain';
+import { getTxHashes } from '../../api/blockchain';
 
 interface ResultModalProps {
   results: Result[];
@@ -9,6 +10,8 @@ interface ResultModalProps {
 
 const ResultModal = ({ results, onClose }: ResultModalProps) => {
   const [isDownloading, setIsDownloading] = useState(false);
+  const [txHashes, setTxHashes] = useState<string[]>([]);
+  const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
 
   // Safety check - if results array is empty, don't render
   if (!results || results.length === 0) {
@@ -38,8 +41,23 @@ const ResultModal = ({ results, onClose }: ResultModalProps) => {
   const safeStudentInfo = {
     studentId: studentInfo?.studentId || 'N/A',
     timestamp: studentInfo?.timestamp,
-    updatedAt: studentInfo?.updatedAt
+    updatedAt: studentInfo?.updatedAt,
+    txHash: studentInfo?.txHash || 'N/A', // Add txHash
   };
+
+  useEffect(() => {
+    async function fetchTxHashes() {
+      if (studentInfo?.studentId) {
+        try {
+          const res = await getTxHashes(studentInfo.studentId);
+          setTxHashes(res.txHashes || []);
+        } catch (err) {
+          setTxHashes([]);
+        }
+      }
+    }
+    fetchTxHashes();
+  }, [studentInfo?.studentId]);
 
   const handleDownloadPDF = async () => {
     setIsDownloading(true);
@@ -74,7 +92,7 @@ const ResultModal = ({ results, onClose }: ResultModalProps) => {
       doc.text('STUDENT INFORMATION', 20, 65);
       
       doc.setFontSize(12);
-      doc.text(`Student ID: ${safeStudentInfo.studentId}`, 20, 75);
+      doc.text(`Matriculation Number: ${safeStudentInfo.studentId}`, 20, 75);
       doc.text(`Total Courses: ${totalResults}`, 20, 85);
       doc.text(`Average Grade (GPA): ${averageGrade}`, 20, 95);
       doc.text(`Date of Issue: ${new Date().toLocaleDateString()}`, 20, 105);
@@ -140,6 +158,12 @@ const ResultModal = ({ results, onClose }: ResultModalProps) => {
       'F': 'text-red-500 bg-red-600/20 border border-red-600/30'
     };
     return gradeMap[grade] || 'text-gray-400 bg-gray-500/20 border border-gray-500/30';
+  };
+
+  const handleCopy = (hash: string, idx: number) => {
+    navigator.clipboard.writeText(hash);
+    setCopiedIdx(idx);
+    setTimeout(() => setCopiedIdx(null), 1500);
   };
 
   return (
@@ -256,9 +280,26 @@ const ResultModal = ({ results, onClose }: ResultModalProps) => {
                 <span className="text-green-400 font-medium">Immutable</span>
               </div>
               <div className="md:col-span-2">
-                <span className="font-medium text-gray-400 block mb-2">Transaction Hash:</span>
+                <span className="font-medium text-gray-400 block mb-2">Transaction Hashes:</span>
                 <div className="font-mono text-xs bg-gray-800/50 border border-gray-700 p-3 rounded-lg break-all text-gray-300">
-                  0x{safeStudentInfo.studentId.toLowerCase()}...transcript
+                  {txHashes.length > 0 ? (
+                    <ul>
+                      {txHashes.map((hash, idx) => (
+                        <li key={idx} className='p-2 bg-white/5 mb-2 rounded flex items-center justify-between'>
+                          <span>{hash}</span>
+                          <button
+                            onClick={() => handleCopy(hash, idx)}
+                            className='ml-2 px-2 py-1 text-xs bg-blue-600 hover:bg-blue-700 rounded text-white transition-colors flex items-center'
+                            title='Copy hash'
+                          >
+                            {copiedIdx === idx ? 'Copied!' : 'Copy'}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <span>No hashes found.</span>
+                  )}
                 </div>
               </div>
             </div>

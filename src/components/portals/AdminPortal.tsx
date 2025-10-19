@@ -234,12 +234,12 @@ const AdminPortal = () => {
             <div className="px-6 py-4">
               <form onSubmit={handleAddResult} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Student ID</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Matric Number</label>
                   <input
                     type="text"
                     value={addForm.studentId}
                     onChange={(e) => setAddForm({ ...addForm, studentId: e.target.value })}
-                    placeholder="e.g., STU001"
+                    placeholder="e.g., U2020/5570001"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                     disabled={loading}
                     required
@@ -252,7 +252,7 @@ const AdminPortal = () => {
                     type="text"
                     value={addForm.courseCode}
                     onChange={(e) => setAddForm({ ...addForm, courseCode: e.target.value })}
-                    placeholder="e.g., CS101"
+                    placeholder="e.g., CSC 491.2"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                     disabled={loading}
                     required
@@ -313,12 +313,12 @@ const AdminPortal = () => {
             <div className="px-6 py-4">
               <form onSubmit={handleUpdateResult} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Student ID</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Matric Number</label>
                   <input
                     type="text"
                     value={updateForm.studentId}
                     onChange={(e) => setUpdateForm({ ...updateForm, studentId: e.target.value })}
-                    placeholder="e.g., STU001"
+                    placeholder="e.g., U2020/5570001"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
                     disabled={loading}
                     required
@@ -331,7 +331,7 @@ const AdminPortal = () => {
                     type="text"
                     value={updateForm.courseCode}
                     onChange={(e) => setUpdateForm({ ...updateForm, courseCode: e.target.value })}
-                    placeholder="e.g., CS101"
+                    placeholder="e.g., CSC 491.2"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
                     disabled={loading}
                     required
@@ -393,12 +393,12 @@ const AdminPortal = () => {
               <div className="px-6 py-4">
                 <form onSubmit={handleSearchResult} className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Student ID</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Matric Number</label>
                     <input
                       type="text"
                       value={searchForm.studentId}
                       onChange={(e) => setSearchForm({ ...searchForm, studentId: e.target.value })}
-                      placeholder="e.g., STU001"
+                      placeholder="e.g., U2020/5570001"
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                       disabled={loading}
                       required
@@ -411,7 +411,7 @@ const AdminPortal = () => {
                       type="text"
                       value={searchForm.courseCode}
                       onChange={(e) => setSearchForm({ ...searchForm, courseCode: e.target.value })}
-                      placeholder="e.g., CS101"
+                      placeholder="e.g., CSC 491.2"
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                       disabled={loading}
                       required
